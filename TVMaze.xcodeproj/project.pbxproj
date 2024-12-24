@@ -37,6 +37,24 @@
 			);
 			target = 186A200D2D189D3D00067809 /* TVMaze */;
 		};
+		189C85272D1AF2DE0036356F /* Exceptions for "TVMaze" folder in "TVMazeTests" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Resource/Assets.xcassets,
+				"Source/Commons/String+Extensions.swift",
+				Source/Model/Serie.swift,
+				Source/Scenes/SerieDetails/SerieDetails.swift,
+				Source/Scenes/SeriesList/SeriesListView.swift,
+				Source/Scenes/SeriesList/SeriesListViewModel.swift,
+				Source/Scenes/SeriesList/Service/SeriesListRepository.swift,
+				Source/Scenes/SeriesList/Service/SeriesListServiceSetup.swift,
+				Source/Service/TVMazeApiError.swift,
+				Source/Service/TVMazeApiRequest.swift,
+				Source/Service/TVMazeApiSetupProtocol.swift,
+				Source/TVMazeApp.swift,
+			);
+			target = 186A201D2D189D3F00067809 /* TVMazeTests */;
+		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -44,6 +62,7 @@
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
 				186A20452D18AE6500067809 /* Exceptions for "TVMaze" folder in "TVMaze" target */,
+				189C85272D1AF2DE0036356F /* Exceptions for "TVMaze" folder in "TVMazeTests" target */,
 			);
 			path = TVMaze;
 			sourceTree = "<group>";
