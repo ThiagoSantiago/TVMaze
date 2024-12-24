@@ -73,4 +73,31 @@ final class SeriesListRepositoryMock: SeriesListRepositoryType {
             completion(.success(series))
         }
     }
+
+    func searchSeries(query: String, completion: @escaping (Swift.Result<[Serie], TVMazeApiError>) -> Void) {
+        if showError {
+            completion(.failure(TVMazeApiError.badRequest))
+        } else {
+            completion(.success([
+                Serie(id: 1,
+                      url: nil,
+                      name: "Game of Thrones",
+                      type: nil,
+                      language: nil,
+                      genres: ["Drama"],
+                      status: "ended",
+                      runtime: nil,
+                      averageRuntime: nil,
+                      premiered: "2013-06-24",
+                      ended: "2015-09-10",
+                      officialSite: nil,
+                      schedule: .init(time: "22:00", days: ["Tuesday"]),
+                      rating: .init(average: 8.8),
+                      weight: nil,
+                      image: nil,
+                      summary: "Summary for Game of Thrones",
+                      updated: 1724121898)
+            ]))
+        }
+    }
 }
