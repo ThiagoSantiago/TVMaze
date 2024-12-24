@@ -5,13 +5,28 @@
 //  Created by Thiago Santiago on 22/12/24.
 //
 
-import Testing
+import XCTest
 @testable import TVMaze
 
-struct TVMazeTests {
+final class SeriesListViewModelTests: XCTestCase {
 
-    @Test func example() async throws {
-        // Write your test here and use APIs like `#expect(...)` to check expected conditions.
+    func test_fetchSeries_with_success() {
+        let sut = SeriesListViewModel(repository: SeriesListRepositoryMock())
+        sut.fetchSeries()
+
+        XCTAssertEqual(sut.series.count, 3)
+        XCTAssertEqual(sut.series[0].name, "Game of Thrones")
+        XCTAssertEqual(sut.series[1].genres, ["Action"])
+        XCTAssertEqual(sut.series[2].summary, "Summary for The Wire")
     }
 
+    func test_fetchSeries_with_error() {
+        let repository = SeriesListRepositoryMock()
+        repository.showError = true
+
+        let sut = SeriesListViewModel(repository: repository)
+        sut.fetchSeries()
+
+        XCTAssertTrue(sut.series.isEmpty)
+    }
 }

@@ -61,7 +61,7 @@ struct SeriesListView: View {
     @ViewBuilder
     func buildItemListView(item: Serie) -> some View {
         HStack {
-            AsyncImage(url: URL(string: item.image.medium)!) { image in
+            AsyncImage(url: URL(string: item.image?.medium ?? "")) { image in
                 image
                     .resizable()
                     .scaledToFill()
