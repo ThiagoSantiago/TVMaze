@@ -9,7 +9,7 @@ import Foundation
 
 final class SeriesListViewModel: ObservableObject {
     @Published var series: [Serie] = []
-    @Published var filteredSeries: [Serie] = []
+    @Published var seriesList: [Serie] = []
     @Published var isLoading: Bool = false
     @Published var canLoadMorePages = true
 
@@ -30,6 +30,7 @@ final class SeriesListViewModel: ObservableObject {
             switch result {
             case let .success(series):
                 self?.series.append(contentsOf: series)
+                self?.seriesList = series
             case let .failure(error):
                 if error == .couldNotFindHost {
                     self?.canLoadMorePages = false
@@ -38,5 +39,30 @@ final class SeriesListViewModel: ObservableObject {
                 }
             }
         })
+    }
+
+    func searchSeries(for text: String) {
+        if text.isEmpty {
+            seriesList = series
+        } else {
+            guard !isLoading else { return }
+
+            isLoading = true
+            repository.searchSeries(query: text) { [weak self] result in
+                self?.isLoading = false
+
+                switch result {
+                case let .success(series):
+                    self?.seriesList = series
+                    print("#### Series list: \(self?.seriesList)")
+                case let .failure(error):
+                    if error == .couldNotFindHost {
+                        self?.canLoadMorePages = false
+                    } else {
+                        print("Error trying to fetch series: \(error)")
+                    }
+                }
+            }
+        }
     }
 }

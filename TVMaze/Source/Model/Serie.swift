@@ -17,14 +17,14 @@ struct Serie: Decodable {
         let status: String
         let runtime: Int?
         let averageRuntime: Int?
-        let premiered: String
+        let premiered: String?
         let ended: String?
         let officialSite: String?
         let schedule: Schedule
         let rating: Rating
         let weight: Int?
         let image: Image?
-        let summary: String
+        let summary: String?
         let updated: Int?
 
         enum CodingKeys: String, CodingKey {
@@ -43,4 +43,9 @@ struct Rating: Decodable {
 
 struct Image: Decodable {
     let medium, original: String
+}
+
+struct SerieElement: Decodable {
+    let score: Double
+    let show: Serie
 }
