@@ -20,7 +20,7 @@ enum SeriesListServiceSetup: TVMazeApiSetupProtocol {
             return url
         case let .searchSeries(query):
             guard let baseUrl = Bundle.main.object(forInfoDictionaryKey: "BaseURL") as? String else { return "" }
-            let url = baseUrl+"/shows??q=girls"
+            let url = baseUrl+"/search/shows?q=\(query)"
 
             return url
         }

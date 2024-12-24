@@ -15,7 +15,7 @@ struct SeriesListView: View {
         NavigationStack {
             ScrollView {
                 LazyVStack {
-                    ForEach(viewModel.series, id: \.id) { serie in
+                    ForEach(viewModel.seriesList, id: \.id) { serie in
                         NavigationLink {
                             SerieDetails()
                         } label: {
@@ -37,6 +37,9 @@ struct SeriesListView: View {
         }
         .background(Color.background)
         .searchable(text: $searchText, prompt: "search series by name")
+        .onChange(of: searchText) { oldValue, newValue in
+            viewModel.searchSeries(for: newValue)
+        }
     }
 
     var loadingView: some View {
@@ -101,9 +104,9 @@ struct SeriesListView: View {
                     .fontWeight(.bold)
 
                     Text(
-                        item.status == "Ended"
-                        ? item.ended?.convertDateStringToUserLocale() ?? "-"
-                        : item.premiered.convertDateStringToUserLocale()
+                        (item.status == "Ended"
+                         ? item.ended?.convertDateStringToUserLocale() ?? "-"
+                         : item.premiered?.convertDateStringToUserLocale()) ?? "-"
                     )
                     .font(.subheadline)
                     .foregroundStyle(Color.text)

@@ -9,6 +9,7 @@ import Foundation
 
 protocol SeriesListRepositoryType {
     func fetchSeriesList(page: Int, completion: @escaping (Swift.Result<[Serie], TVMazeApiError>) -> Void)
+    func searchSeries(query: String, completion: @escaping (Swift.Result<[Serie], TVMazeApiError>) -> Void)
 }
 
 final class SeriesListRepository: SeriesListRepositoryType {
@@ -25,6 +26,17 @@ final class SeriesListRepository: SeriesListRepositoryType {
             switch result {
             case let .success(series):
                 completion(.success(series))
+            case let .failure(error):
+                completion(.failure(error))
+            }
+        }
+    }
+
+    func searchSeries(query: String, completion: @escaping (Swift.Result<[Serie], TVMazeApiError>) -> Void) {
+        requester.request(with: SeriesListServiceSetup.searchSeries(query: query)) { (result: Swift.Result<[SerieElement], TVMazeApiError>) in
+            switch result {
+            case let .success(series):
+                completion(.success(series.map({ $0.show })))
             case let .failure(error):
                 completion(.failure(error))
             }
