@@ -17,7 +17,8 @@ struct SeriesListView: View {
                 LazyVStack {
                     ForEach(viewModel.seriesList, id: \.id) { serie in
                         NavigationLink {
-                            SerieDetails()
+                            let viewModel = SerieDetailsViewModel(serie: serie)
+                            SerieDetailsView(viewModel: viewModel)
                         } label: {
                             buildItemListView(item: serie)
                         }
@@ -29,6 +30,7 @@ struct SeriesListView: View {
                         loadingPaginationView
                     }
                 }
+                .navigationTitle("Home")
             }
             .padding(.vertical)
         }

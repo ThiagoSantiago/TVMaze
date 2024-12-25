@@ -41,9 +41,16 @@
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Resource/Assets.xcassets,
+				"Source/Commons/Array+Extensions.swift",
 				"Source/Commons/String+Extensions.swift",
 				Source/Model/Serie.swift,
-				Source/Scenes/SerieDetails/SerieDetails.swift,
+				Source/Model/SerieDetails.swift,
+				Source/Scenes/EpisodeDetails/EpisodeDetailsView.swift,
+				Source/Scenes/SerieDetails/EpisodeListView.swift,
+				Source/Scenes/SerieDetails/SerieDetailsView.swift,
+				Source/Scenes/SerieDetails/SerieDetailsViewModel.swift,
+				Source/Scenes/SerieDetails/Service/SerieDetailsRepository.swift,
+				Source/Scenes/SerieDetails/Service/SerieDetailsServiceSetup.swift,
 				Source/Scenes/SeriesList/SeriesListView.swift,
 				Source/Scenes/SeriesList/SeriesListViewModel.swift,
 				Source/Scenes/SeriesList/Service/SeriesListRepository.swift,
