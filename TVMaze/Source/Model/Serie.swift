@@ -23,7 +23,7 @@ struct Serie: Decodable {
     let schedule: Schedule
     let rating: Rating
     let weight: Int?
-    let image: Image?
+    let image: SerieImage?
     let summary: String?
     let updated: Int?
     
@@ -41,7 +41,7 @@ struct Rating: Decodable {
     let average: Double?
 }
 
-struct Image: Decodable {
+struct SerieImage: Decodable {
     let medium, original: String
 }
 

@@ -17,7 +17,7 @@ struct SerieDetail: Decodable {
     let airdate: String?
     let runtime: Int?
     let rating: Rating
-    let image: Image?
+    let image: SerieImage?
     let summary: String
 
     enum CodingKeys: String, CodingKey {
