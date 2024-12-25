@@ -54,7 +54,6 @@ final class SeriesListViewModel: ObservableObject {
                 switch result {
                 case let .success(series):
                     self?.seriesList = series
-                    print("#### Series list: \(self?.seriesList)")
                 case let .failure(error):
                     if error == .couldNotFindHost {
                         self?.canLoadMorePages = false
