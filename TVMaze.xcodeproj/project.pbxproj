@@ -43,6 +43,7 @@
 				Resource/Assets.xcassets,
 				"Source/Commons/Array+Extensions.swift",
 				"Source/Commons/String+Extensions.swift",
+				Source/Model/Person.swift,
 				Source/Model/Serie.swift,
 				Source/Model/SerieDetails.swift,
 				Source/Scenes/EpisodeDetails/EpisodeDetailsView.swift,
@@ -502,9 +503,9 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 9B4XV2S66B;
+				DEVELOPMENT_TEAM = C247LTFS54;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.6;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.lloydsbank.TVMazeTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -521,9 +522,9 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 9B4XV2S66B;
+				DEVELOPMENT_TEAM = C247LTFS54;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.6;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.lloydsbank.TVMazeTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";

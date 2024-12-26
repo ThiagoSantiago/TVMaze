@@ -20,6 +20,7 @@ final class SerieDetailsViewModel: ObservableObject {
     @Published var schedule: Schedule? = nil
     @Published var listOfEpisodes: [Episode] = []
     @Published var isFavorite: Bool = false
+    @Published var errorMessage: String?
 
     private var serie: Serie
     let favoritesManager = FavoritesManager()
@@ -63,7 +64,7 @@ final class SerieDetailsViewModel: ObservableObject {
                 }
                 self?.listOfEpisodes = episodes
             case let .failure(error):
-                print("Error trying to fetch series: \(error)")
+                self?.errorMessage = error.localizedDescription
             }
         })
     }

@@ -15,19 +15,24 @@ struct SeriesListView: View {
         NavigationStack {
             ScrollView {
                 LazyVStack {
-                    ForEach(viewModel.seriesList, id: \.id) { serie in
-                        NavigationLink {
-                            let viewModel = SerieDetailsViewModel(serie: serie)
-                            SerieDetailsView(viewModel: viewModel)
-                        } label: {
-                            buildItemListView(item: serie)
+                    if let errorMessage = viewModel.errorMessage {
+                        Text(errorMessage)
+                            .foregroundColor(.red)
+                    } else {
+                        ForEach(viewModel.seriesList, id: \.id) { serie in
+                            NavigationLink {
+                                let viewModel = SerieDetailsViewModel(serie: serie)
+                                SerieDetailsView(viewModel: viewModel)
+                            } label: {
+                                buildItemListView(item: serie)
+                            }
                         }
-                    }
 
-                    if viewModel.isLoading {
-                        loadingView
-                    } else if viewModel.canLoadMorePages {
-                        loadingPaginationView
+                        if viewModel.isLoading {
+                            loadingView
+                        } else if viewModel.canLoadMorePages {
+                            loadingPaginationView
+                        }
                     }
                 }
                 .navigationTitle("Home")
@@ -41,18 +46,29 @@ struct SeriesListView: View {
                                 .foregroundStyle(.black)
                         }
                     }
+
+                    ToolbarItem(placement: .navigationBarTrailing) {
+                        NavigationLink {
+                            let viewModel = SearchPeopleViewModel()
+                            SearchPeopleView(viewModel: viewModel)
+                        } label: {
+                            Image(systemName: "person.crop.badge.magnifyingglass.fill")
+                                .foregroundStyle(.black)
+                        }
+                    }
                 }
             }
             .padding(.vertical)
+            .searchable(text: $searchText, prompt: "search series by name")
+            .onChange(of: searchText) { oldValue, newValue in
+                viewModel.searchSeries(for: newValue)
+            }
         }
         .onAppear {
+            viewModel.onAppear()
             viewModel.fetchSeries()
         }
         .background(Color.background)
-        .searchable(text: $searchText, prompt: "search series by name")
-        .onChange(of: searchText) { oldValue, newValue in
-            viewModel.searchSeries(for: newValue)
-        }
     }
 
     var loadingView: some View {

@@ -12,12 +12,17 @@ final class SeriesListViewModel: ObservableObject {
     @Published var seriesList: [Serie] = []
     @Published var isLoading: Bool = false
     @Published var canLoadMorePages = true
+    @Published var errorMessage: String?
 
     private var requestPage: Int = 0
     private let repository: SeriesListRepositoryType
 
     init(repository: SeriesListRepositoryType = SeriesListRepository()) {
         self.repository = repository
+    }
+
+    func onAppear() {
+        requestPage = 0
     }
 
     func fetchSeries() {
@@ -35,7 +40,7 @@ final class SeriesListViewModel: ObservableObject {
                 if error == .couldNotFindHost {
                     self?.canLoadMorePages = false
                 } else {
-                    print("Error trying to fetch series: \(error)")
+                    self?.errorMessage = error.localizedDescription
                 }
             }
         })

@@ -8,11 +8,10 @@
 import SwiftUI
 
 struct LoginView: View {
-
     @StateObject private var viewModel = LoginViewModel()
 
     var body: some View {
-        NavigationView {
+        NavigationStack {
             VStack(spacing: 20) {
                 if viewModel.isAuthenticated {
                     SeriesListView(viewModel: .init())
@@ -78,9 +77,12 @@ struct LoginView: View {
                     .environmentObject(viewModel)
             }
         }
+        .background(Color.background)
     }
 }
 
+#if DEBUG
 #Preview {
     LoginView()
 }
+#endif
