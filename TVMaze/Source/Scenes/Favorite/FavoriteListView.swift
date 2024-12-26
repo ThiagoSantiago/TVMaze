@@ -1,76 +1,51 @@
 //
-//  ShowsListView.swift
+//  FavoriteListView.swift
 //  TVMaze
 //
-//  Created by Thiago Santiago on 22/12/24.
+//  Created by Thiago Santiago on 25/12/24.
 //
 
 import SwiftUI
 
-struct SeriesListView: View {
-    @ObservedObject var viewModel: SeriesListViewModel
-    @State private var searchText = ""
+struct FavoriteListView: View {
+    @ObservedObject var viewModel: FavoriteListViewModel
 
     var body: some View {
         NavigationStack {
             ScrollView {
                 LazyVStack {
-                    ForEach(viewModel.seriesList, id: \.id) { serie in
-                        NavigationLink {
-                            let viewModel = SerieDetailsViewModel(serie: serie)
-                            SerieDetailsView(viewModel: viewModel)
-                        } label: {
-                            buildItemListView(item: serie)
+                    if viewModel.isLoading {
+                        ProgressView("Loading favorites...")
+                    } else if let errorMessage = viewModel.errorMessage {
+                        Text(errorMessage)
+                            .foregroundColor(.red)
+                    } else {
+                        ForEach(viewModel.seriesList, id: \.id) { serie in
+                            NavigationLink {
+                                let viewModel = SerieDetailsViewModel(serie: serie)
+                                SerieDetailsView(viewModel: viewModel)
+                            } label: {
+                                buildItemListView(item: serie)
+                            }
                         }
                     }
-
-                    if viewModel.isLoading {
-                        loadingView
-                    } else if viewModel.canLoadMorePages {
-                        loadingPaginationView
-                    }
                 }
-                .navigationTitle("Home")
+                .navigationTitle("Favorites")
                 .toolbar {
                     ToolbarItem(placement: .navigationBarTrailing) {
-                        NavigationLink {
-                            let viewModel = FavoriteListViewModel()
-                            FavoriteListView(viewModel: viewModel)
-                        } label: {
-                            Image(systemName: "heart.circle.fill")
-                                .foregroundStyle(.black)
+                        Button(action: {
+                            viewModel.sortList()
+                        }) {
+                            Image("sort.alpha.down")
+                                .resizable()
+                                .frame(width: 22, height: 22)
                         }
                     }
                 }
             }
-            .padding(.vertical)
         }
         .onAppear {
-            viewModel.fetchSeries()
-        }
-        .background(Color.background)
-        .searchable(text: $searchText, prompt: "search series by name")
-        .onChange(of: searchText) { oldValue, newValue in
-            viewModel.searchSeries(for: newValue)
-        }
-    }
-
-    var loadingView: some View {
-        HStack {
-            Spacer()
-            ProgressView()
-            Spacer()
-        }
-    }
-
-    var loadingPaginationView: some View {
-        HStack {
-            Spacer()
-            Text("Loading more...")
-                .onAppear {
-                    viewModel.fetchSeries()
-                }
-            Spacer()
+            viewModel.fetchFavorites()
         }
     }
 
@@ -85,10 +60,10 @@ struct SeriesListView: View {
                     .cornerRadius(16)
             } placeholder: {
                 Image("placeholder")
-                .resizable()
-                .scaledToFill()
-                .frame(width: 100, height: 150)
-                .cornerRadius(16)
+                    .resizable()
+                    .scaledToFill()
+                    .frame(width: 100, height: 150)
+                    .cornerRadius(16)
             }
             .frame(width: 100, height: 150)
 
@@ -128,7 +103,6 @@ struct SeriesListView: View {
                     .font(.subheadline)
                     .foregroundStyle(Color.text)
                 }
-                Spacer()
             }
             Spacer()
         }
@@ -137,8 +111,7 @@ struct SeriesListView: View {
     }
 }
 
-#if DEBUG
 #Preview {
-    SeriesListView(viewModel: .init())
+    let viewModel = FavoriteListViewModel()
+    FavoriteListView(viewModel: viewModel)
 }
-#endif

@@ -9,6 +9,7 @@ import SwiftUI
 
 final class SerieDetailsViewModel: ObservableObject {
     @Published var isLoading: Bool = false
+    @Published var serieId: String = ""
     @Published var name: String = ""
     @Published var status: String = ""
     @Published var imageUrl: String = ""
@@ -18,8 +19,10 @@ final class SerieDetailsViewModel: ObservableObject {
     @Published var seriePremier: String = ""
     @Published var schedule: Schedule? = nil
     @Published var listOfEpisodes: [Episode] = []
+    @Published var isFavorite: Bool = false
 
     private var serie: Serie
+    let favoritesManager = FavoritesManager()
     private let repository: SerieDetailsRepositoryType
 
     init(
@@ -28,6 +31,7 @@ final class SerieDetailsViewModel: ObservableObject {
     ) {
         self.serie = serie
         self.repository = repository
+        serieId = "\(serie.id)"
         name = serie.name
         status = serie.status
         imageUrl = serie.image?.original ?? ""
@@ -36,6 +40,8 @@ final class SerieDetailsViewModel: ObservableObject {
         serieEnded = serie.ended ?? ""
         seriePremier = serie.premiered ?? ""
         schedule = serie.schedule
+
+        verifyFavorite(serieId)
     }
 
     func fetchSerieDetails() {
@@ -60,5 +66,19 @@ final class SerieDetailsViewModel: ObservableObject {
                 print("Error trying to fetch series: \(error)")
             }
         })
+    }
+
+    func toggleFavorite(_ id: String) {
+        if favoritesManager.isFavorite(id: id) {
+            favoritesManager.removeFavorite(id: id)
+            isFavorite = false
+        } else {
+            favoritesManager.addFavorite(id: id)
+            isFavorite = true
+        }
+    }
+
+    private func verifyFavorite(_ id: String) {
+        isFavorite = favoritesManager.isFavorite(id: id)
     }
 }
