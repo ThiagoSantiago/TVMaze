@@ -44,7 +44,7 @@ final class SerieDetailsViewModelTests: XCTestCase {
         let repository = SerieDetailsRepositoryMock()
         repository.showError = true
 
-        let sut = SerieDetailsViewModel(serie: serie, repository: SerieDetailsRepositoryMock())
+        let sut = SerieDetailsViewModel(serie: serie, repository: repository)
         sut.fetchSerieDetails()
 
         XCTAssertEqual(sut.errorMessage, TVMazeApiError.badRequest.localizedDescription)
