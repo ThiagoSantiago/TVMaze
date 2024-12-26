@@ -23,11 +23,32 @@ struct SerieDetailsView: View {
                                 .frame(width: 180, height: 250)
                                 .cornerRadius(16)
                         } placeholder: {
-                            ProgressView()
+                            Image("placeholder")
+                                .resizable()
+                                .scaledToFill()
+                                .frame(width: 180, height: 250)
+                                .cornerRadius(16)
                         }
                         .frame(width: 200, height: 250)
                         Spacer()
                     }
+
+                    HStack {
+                        Button(action: {
+                            viewModel.toggleFavorite(viewModel.serieId)
+                        }) {
+                            Image(systemName: viewModel.isFavorite
+                                  ? "heart.circle.fill"
+                                  : "heart.circle"
+                            )
+                            .resizable()
+                            .frame(width: 28, height: 28)
+                            .foregroundColor(viewModel.isFavorite ? .red : .gray)
+                        }
+                        .frame(width: 28, height: 28)
+                        Spacer()
+                    }
+                    .padding(.top)
 
                     VStack(alignment: .leading) {
 
@@ -45,7 +66,7 @@ struct SerieDetailsView: View {
                                 .font(.subheadline)
                                 .foregroundStyle(Color.text)
                         }
-                        .padding(.vertical, 8)
+                        .padding(.bottom, 8)
 
                         HStack {
                             Text("Genres:")

@@ -5,7 +5,7 @@
 //  Created by Thiago Santiago on 22/12/24.
 //
 
-import Foundation
+import SwiftUI
 
 final class SeriesListViewModel: ObservableObject {
     @Published var series: [Serie] = []
