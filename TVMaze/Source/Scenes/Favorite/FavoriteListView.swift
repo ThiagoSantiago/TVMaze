@@ -111,7 +111,9 @@ struct FavoriteListView: View {
     }
 }
 
+#if DEBUG
 #Preview {
     let viewModel = FavoriteListViewModel()
     FavoriteListView(viewModel: viewModel)
 }
+#endif

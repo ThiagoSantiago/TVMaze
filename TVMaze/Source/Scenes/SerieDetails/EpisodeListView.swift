@@ -14,9 +14,16 @@ struct EpisodeListView: View {
         let groupedEpisodes = viewModel.listOfEpisodes.groupedBySeason()
         VStack {
             List {
-                ForEach(groupedEpisodes.keys.sorted(), id: \.self) { season in
-                    Section(header: Text("Season \(season)").font(.headline)) {
-                        createSeasonListView(episodes: groupedEpisodes[season] ?? [])
+                if viewModel.isLoading {
+                    ProgressView("Loading...")
+                } else if let errorMessage = viewModel.errorMessage {
+                    Text(errorMessage)
+                        .foregroundColor(.red)
+                } else {
+                    ForEach(groupedEpisodes.keys.sorted(), id: \.self) { season in
+                        Section(header: Text("Season \(season)").font(.headline)) {
+                            createSeasonListView(episodes: groupedEpisodes[season] ?? [])
+                        }
                     }
                 }
             }

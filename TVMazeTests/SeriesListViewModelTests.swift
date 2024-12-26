@@ -27,7 +27,7 @@ final class SeriesListViewModelTests: XCTestCase {
         let sut = SeriesListViewModel(repository: repository)
         sut.fetchSeries()
 
-        XCTAssertTrue(sut.seriesList.isEmpty)
+        XCTAssertEqual(sut.errorMessage, TVMazeApiError.badRequest.localizedDescription)
     }
 
     func test_searchSeries_with_success() {
